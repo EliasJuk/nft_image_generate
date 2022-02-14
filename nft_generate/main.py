@@ -1,4 +1,3 @@
-from webbrowser import Chrome
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.alert import Alert
@@ -9,8 +8,51 @@ import time
 chrome_options = ChromeOptions()
 chrome_options.add_extension('extension.crx')
 driver = webdriver.Chrome('./chromedriver', options=chrome_options)
+driver.execute_script("window.open('http://google.com/', '_blank')")
+driver.close()
+
+# Muda de aba
+time.sleep(2)
+driver.switch_to.window(driver.window_handles[0])
+driver.find_element_by_xpath('//*[@id="app-content"]/div/div[2]/div/div/div/button').click()
+
+# Carteira
+time.sleep(2)
+driver.find_element_by_xpath('//*[@id="app-content"]/div/div[2]/div/div/div[2]/div/div[2]/div[1]/button').click()
 
 
-# FECHAR NAVEGADOR
-input('Press [ENTER] to close browser...')
-driver.quit()
+# Termos
+time.sleep(2)
+driver.find_element_by_xpath('//*[@id="app-content"]/div/div[2]/div/div/div/div[5]/div[1]/footer/button[2]').click()
+
+# Frase Secreta
+time.sleep(2)
+frase_secreta = ''
+driver.find_element_by_xpath('//*[@id="app-content"]/div/div[2]/div/div/form/div[4]/div[1]/div/input').send_keys(frase_secreta)
+
+# Senha
+time.sleep(2)
+senha = ''
+driver.find_element_by_xpath('//*[@id="password"]').send_keys(senha)
+
+# Confirm
+time.sleep(2)
+driver.find_element_by_xpath('//*[@id="confirm-password"]').send_keys(senha)
+
+# Termos
+time.sleep(1)
+driver.find_element_by_xpath('//*[@id="app-content"]/div/div[2]/div/div/form/div[7]/div').click()
+
+# Import
+time.sleep(1)
+driver.find_element_by_xpath('//*[@id="app-content"]/div/div[2]/div/div/form/button').click()
+
+# Tudo Pronto
+time.sleep(1)
+driver.find_element_by_xpath('//*[@id="app-content"]/div/div[2]/div/div/button').click()
+
+# Fechar Janela
+driver.close()
+
+# Mintable
+driver.get('https://mintable.app/')
